@@ -8,15 +8,16 @@ import (
 )
 
 func TestGetPeersList(t *testing.T) {
-	torrentfile, err := bencode.Parse("../testfile/debian-11.5.0-amd64-netinst.iso.torrent")
+	torrentfile, err := bencode.Parse("../testfile/debian-iso.torrent")
 	require.Nil(t, err)
 
 	Url, err := BuildURL(torrentfile)
 	require.Nil(t, err)
+	fmt.Println(Url)
 
 	peers, err := GetPeersList(Url)
 	require.Nil(t, err)
-	for _, peer := range peers {
-		fmt.Printf("%#v", peer)
+	for i, peer := range peers {
+		fmt.Printf("Peer: %d, IP: %s, Port: %d", i, peer.Ip, peer.Port)
 	}
 }

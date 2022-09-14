@@ -15,7 +15,7 @@ const (
 type Peer struct {
 	Ip   net.IP
 	Port uint16
-	Id   [20]byte
+	//Id   [20]byte
 }
 
 func (peer Peer) GetAddress() string {

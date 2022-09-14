@@ -38,7 +38,7 @@ func BuildURL(tf *bencode.TorrentFile) (string, error) {
 }
 
 func GetPeersList(Url string) ([]peer.Peer, error) {
-	cli := http.DefaultClient
+	cli := &http.Client{Timeout: 15e9}
 	resp, err := cli.Get(Url)
 	if err != nil {
 		return nil, fmt.Errorf("request error: %s", err)
