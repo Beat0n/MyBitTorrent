@@ -25,17 +25,19 @@ type BencodeInfo struct {
 	Name   string `bencode:"name"`
 	//文件块大小
 	Piecelenth int `bencode:"piece length"`
-	//文件标志信息
+	//文件块标志信息
 	Pieces string `bencode:"pieces"`
 }
 
 type TorrentFile struct {
-	Announce    string
-	Length      int
-	PieceLength int
-	Name        string
-	InfoHash    [20]byte
+	Announce string
+	//整个文件的标识信息
+	InfoHash [20]byte
+	//每个文件块的标识信息
 	PieceHashes [][20]byte
+	PieceLength int
+	Length      int
+	Name        string
 }
 
 func (info *BencodeInfo) hash() ([20]byte, error) {
@@ -73,16 +75,16 @@ func (bto *BencodeTorrent) toTorrenFile() (*TorrentFile, error) {
 	}
 	t := &TorrentFile{
 		bto.Announce,
-		bto.Info.Length,
-		bto.Info.Piecelenth,
-		bto.Info.Name,
 		h,
 		hashes,
+		bto.Info.Piecelenth,
+		bto.Info.Length,
+		bto.Info.Name,
 	}
 	return t, nil
 }
 
-func Parse(torrentname string) (*BencodeTorrent, error) {
+func Parse(torrentname string) (*TorrentFile, error) {
 	file, err := os.OpenFile(torrentname, os.O_RDONLY, 0666)
 	if err != nil {
 		return nil, err
@@ -93,5 +95,9 @@ func Parse(torrentname string) (*BencodeTorrent, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &bto, nil
+	torrentfile, err := bto.toTorrenFile()
+	if err != nil {
+		return nil, err
+	}
+	return torrentfile, nil
 }

@@ -1,7 +1,10 @@
 package tracker
 
-import "MyBitTorrent/peer"
+import (
+	"time"
+)
 
-type Response struct {
-	PeersList []peer.Peer
+type TrackerResp struct {
+	interval  time.Duration
+	PeersList string
 }
