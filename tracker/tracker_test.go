@@ -38,9 +38,7 @@ func TestFindPeers(t *testing.T) {
 	tf, _ := bencode.Parse("../testfile/debian-iso.torrent")
 
 	var peerId [IDLEN]byte
-	_, _ = rand.Re
-
-	ad(peerId[:])
+	_, _ = rand.Read(peerId[:])
 	url, _ := buildUrl(tf, peerId)
 	fmt.Println(url)
 
