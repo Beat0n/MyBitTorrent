@@ -12,10 +12,10 @@ import (
 var update = flag.Bool("update", false, "update .json file")
 
 func TestParse(t *testing.T) {
-	torrent, err := Parse("testdata/archlinux-2019.12.01-x86_64.iso.torrent")
+	torrent, err := Parse("../testfile/archlinux-2019.12.01-x86_64.iso.torrent")
 	require.Nil(t, err)
 
-	jsonPath := "testdata/archlinux-2019.12.01-x86_64.iso.torrent.json"
+	jsonPath := "../testfile/archlinux-2019.12.01-x86_64.iso.torrent.json"
 	if *update {
 		serialized, err := json.MarshalIndent(torrent, "", "  ")
 		require.Nil(t, err)

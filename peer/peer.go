@@ -5,16 +5,9 @@ import (
 	"net"
 )
 
-const (
-	PeerPort int = 6666
-	IpLen    int = 4
-	PortLen  int = 2
-	PeerLen  int = IpLen + PortLen
-)
-
 type Peer struct {
-	Ip   net.IP
-	Port uint16
+	Ip   net.IP `bencode:"ip"`
+	Port uint16 `bencode:"port"`
 	//Id   [20]byte
 }
 
